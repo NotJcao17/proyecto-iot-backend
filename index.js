@@ -3,6 +3,8 @@ const cors = require('cors');
 require('dotenv').config(); // Para las variables env
 const dbConnect = require('./src/config/mongo');
 const errorMiddleware = require('./src/middleware/errorMiddleware');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./src/config/swagger');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -10,6 +12,9 @@ const PORT = process.env.PORT || 3000;
 // Middlewares
 app.use(cors()); // Para conexiones externas
 app.use(express.json()); // Para que el server entienda JSON
+
+// Ruta para swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Rutas
 app.use('/api/users', require('./src/routes/users'));
