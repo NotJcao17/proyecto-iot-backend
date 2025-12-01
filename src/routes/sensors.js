@@ -5,6 +5,13 @@ const { handleHttpError } = require('../utils/handleError'); // usen la función
 
 /**
  * @swagger
+ * tags:
+ *   name: Sensors
+ *   description: API para la gestión de sensores
+ */
+
+/**
+ * @swagger
  * components:
  *   schemas:
  *     Sensor:
@@ -32,6 +39,7 @@ const { handleHttpError } = require('../utils/handleError'); // usen la función
  * /sensors:
  *   get:
  *     summary: Obtiene la lista de sensores
+ *     tags: [Sensors]
  *     responses:
  *       200:
  *         description: Lista de sensores
@@ -58,6 +66,7 @@ router.get('/', async (req, res) => {
  * /sensors/{id}:
  *   get:
  *     summary: Obtiene un sensor por ID
+ *     tags: [Sensors] 
  *     parameters:
  *       - in: path
  *         name: id
@@ -94,6 +103,7 @@ router.get('/:id', async (req, res) => {
  * /sensors:
  *   post:
  *     summary: Crea un nuevo sensor
+ *     tags: [Sensors] 
  *     requestBody:
  *       required: true
  *       content:
@@ -139,6 +149,7 @@ router.post('/', async (req, res) => {
  * /sensors/{id}:
  *   patch:
  *     summary: Actualiza un sensor existente
+ *     tags: [Sensors] 
  *     parameters:
  *       - in: path
  *         name: id
@@ -191,6 +202,7 @@ router.patch('/:id', async (req, res) => {
  * /sensors/{id}:
  *   delete:
  *     summary: Elimina un sensor por ID
+ *     tags: [Sensors] 
  *     description: |
  *       Solo se puede eliminar si:
  *       - No tiene dispositivos asociados

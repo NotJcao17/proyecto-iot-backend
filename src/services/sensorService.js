@@ -31,6 +31,7 @@ const sensorService = {
         if (deviceCount > 0) {
             throw new Error('DISPOSITIVOS_ASOCIADOS');
         }
+        // validar que no tenga readings
         const readingCount = await ReadingModel.countDocuments({ sensorId: id});
         if (readingCount > 0) {
             throw new Error("LECTURAS_ASOCIADAS")

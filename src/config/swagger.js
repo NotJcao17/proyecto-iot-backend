@@ -1,5 +1,4 @@
 const swaggerJsdoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
 
 const options = {
   definition: {
@@ -14,15 +13,13 @@ const options = {
         url: 'http://localhost:3000/api',
         description: 'Servidor de Desarrollo Local',
       },
+      // Agregar aquí url cuando esté en la nube y eso
     ],
   },
   apis: ['./src/routes/*.js'],
 };
 
+// generar la especificación
 const swaggerSpec = swaggerJsdoc(options);
 
-function setupSwagger(app) {
-  app.use('/app-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-}
-
-module.exports = { swaggerSpec, setupSwagger };
+module.exports = swaggerSpec;
