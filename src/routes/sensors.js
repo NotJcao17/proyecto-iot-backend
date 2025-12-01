@@ -17,16 +17,12 @@ const { handleHttpError } = require('../utils/handleError'); // usen la función
  *           enum: [temperature, humidity, co2, noise]
  *         unit:
  *           type: string
- *           enum: ["°C", "%", "ppm"]
+ *           enum: ["°C", "%", "ppm", "dB"]
  *         model:
  *           type: string
  *         location:
- *           type: object
- *           properties:
- *             lat:
- *               type: number
- *             lng:
- *               type: number
+ *           type: string
+ *           description: "Coordenadas en formato texto. Ejemplo: '19.4326,-99.1332'"
  *         isActive:
  *           type: boolean
  */
@@ -79,6 +75,7 @@ router.get('/', async (req, res) => {
  *       404:
  *         description: Sensor no encontrado
  */
+
 // GET BY ID
 router.get('/:id', async (req, res) => {
     try {
@@ -92,7 +89,6 @@ router.get('/:id', async (req, res) => {
         handleHttpError(res, 'ERROR_GET_SENSOR');
     }
 });
-
 /**
  * @swagger
  * /sensors:
@@ -104,28 +100,30 @@ router.get('/:id', async (req, res) => {
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - type
+ *               - unit
  *             properties:
  *               type:
  *                 type: string
  *                 enum: [temperature, humidity, co2, noise]
  *               unit:
  *                 type: string
- *                 enum: ["°C", "%", "ppm"]
+ *                 enum: ["°C", "%", "ppm", "dB"]
  *               model:
  *                 type: string
  *               location:
- *                 type: object
- *                 properties:
- *                   lat:
- *                     type: number
- *                   lng:
- *                     type: number
+ *                 type: string
+ *                 description: "Coordenadas en texto. Ejemplo: '19.4326,-99.1332'"
  *               isActive:
  *                 type: boolean
  *     responses:
  *       201:
  *         description: Sensor creado correctamente
+ *       400:
+ *         description: Error de validación
  */
+
 // POST
 router.post('/', async (req, res) => {
     try {
@@ -136,7 +134,6 @@ router.post('/', async (req, res) => {
         handleHttpError(res, 'ERROR_CREATE_SENSOR');
     }
 });
-
 /**
  * @swagger
  * /sensors/{id}:
@@ -158,25 +155,23 @@ router.post('/', async (req, res) => {
  *             properties:
  *               type:
  *                 type: string
+ *                 enum: [temperature, humidity, co2, noise]
  *               unit:
  *                 type: string
+ *                 enum: ["°C", "%", "ppm", "dB"]
  *               model:
  *                 type: string
  *               location:
- *                 type: object
- *                 properties:
- *                   lat:
- *                     type: number
- *                   lng:
- *                     type: number
+ *                 type: string
  *               isActive:
  *                 type: boolean
  *     responses:
  *       200:
- *         description: Sensor actualizado
+ *         description: Sensor actualizado correctamente
  *       404:
  *         description: Sensor no encontrado
  */
+
 // PATCH
 router.patch('/:id', async (req, res) => {
     try {
@@ -184,19 +179,23 @@ router.patch('/:id', async (req, res) => {
         const body = req.body;
         const updatedSensor = await sensorService.update(id, body);
         if (!updatedSensor) {
-             return handleHttpError(res, 'SENSOR_NOT_FOUND', 404);
+            return handleHttpError(res, 'SENSOR_NOT_FOUND', 404);
         }
         res.json(updatedSensor);
     } catch (e) {
         handleHttpError(res, 'ERROR_UPDATE_SENSOR');
     }
 });
-
 /**
  * @swagger
  * /sensors/{id}:
  *   delete:
  *     summary: Elimina un sensor por ID
+ *     description: |
+ *       Solo se puede eliminar si:
+ *       - No tiene dispositivos asociados
+ *       - No tiene lecturas asociadas
+ *       - El sensor está inactivo (isActive = false)
  *     parameters:
  *       - in: path
  *         name: id
@@ -209,18 +208,32 @@ router.patch('/:id', async (req, res) => {
  *         description: Sensor eliminado
  *       404:
  *         description: Sensor no encontrado
+ *       400:
+ *         description: El sensor no puede eliminarse por restricciones (devices/lecturas/activo)
  */
+
 // DELETE
 router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const result = await sensorService.delete(id);
         if (!result) {
-             return handleHttpError(res, 'SENSOR_NOT_FOUND', 404);
+            return handleHttpError(res, 'SENSOR_NOT_FOUND', 404);
         }
         res.json({ message: 'Sensor Deleted', id });
     } catch (e) {
-        
+        if (e.message === 'DISPOSITIVOS_ASOCIADOS') {
+            return handleHttpError(res, 'DISPOSITIVOS_ASOCIADOS', 400);
+        }
+        if (e.message === 'LECTURAS_ASOCIADAS') {
+            return handleHttpError(res, 'LECTURAS_ASOCIADAS', 400);
+        }
+        if (e.message === 'SENSOR_ACTIVO') {
+            return handleHttpError(res, 'SENSOR_ACTIVO', 400);
+        }
+
+        // Error inesperado
+        return handleHttpError(res, 'ERROR_DESCONOCIDO', 500);
     }
 });
 
