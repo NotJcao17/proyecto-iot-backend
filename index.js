@@ -14,6 +14,7 @@ app.use(express.json()); // Para que el server entienda JSON
 // Rutas
 app.use('/api/users', require('./src/routes/users'));
 app.use('/api/zones', require('./src/routes/zones'));
+app.use('/api/sensors', require('./src/routes/sensors'))
 
 // Ruta de prueba
 app.get('/', (req, res) => {
