@@ -19,6 +19,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/users', require('./src/routes/users'));
 app.use('/api/zones', require('./src/routes/zones'));
 app.use('/api/sensors', require('./src/routes/sensors'))
+app.use('/api/readings', require('./src/routes/readings'));
 
 // Ruta de prueba
 app.get('/', (req, res) => {
