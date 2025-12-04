@@ -1,0 +1,2 @@
+PORT=3000
+MONGO_URI=mongodb+srv://development_db_user:Y64ulgpuswwdk3TJ@cluster-iot-backend.kyvggdv.mongodb.net/iot_db?appName=cluster-iot-backend
