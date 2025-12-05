@@ -13,7 +13,10 @@ const options = {
         url: 'http://localhost:3000/api',
         description: 'Servidor de Desarrollo Local',
       },
-      // Agregar aquí url cuando esté en la nube y eso
+      {
+        url: 'https://proyecto-iot-backend-eb.onrender.com/api', // <--- PEGA TU URL DE RENDER AQUÍ
+        description: 'Servidor de Producción',
+      },
     ],
   },
   apis: ['./src/routes/*.js'],
