@@ -121,7 +121,7 @@ router.post('/', async (req, res) => {
         const newZone = await zoneService.create(body);
         res.status(201).json(newZone);
     } catch (e) {
-        handleHttpError(res, 'ERROR_CREATE_ZONE');
+        handleHttpError(res, 'ERROR_CREATE_ZONE verifica los datos ingresados',400);
     }
 });
 
@@ -160,7 +160,7 @@ router.patch('/:id', async (req, res) => {
         }
         res.json(updatedZone);
     } catch (e) {
-        handleHttpError(res, 'ERROR_UPDATE_ZONE');
+        handleHttpError(res, 'ERROR_UPDATE_ZONE verifica los datos ingresados',400);
     }
 });
 

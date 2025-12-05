@@ -133,7 +133,7 @@ router.post('/', async (req, res) => {
         if (e.message === 'EMAIL_EN_USO') {
             handleHttpError(res, 'EMAIL_EN_USO', 400);
         } else {
-            handleHttpError(res, 'ERROR_CREATE_USER');
+            handleHttpError(res, 'ERROR_CREATE_USER verifica los datos ingresados', 400);
         }
     }
 });
@@ -178,7 +178,7 @@ router.patch('/:id', async (req, res) => {
          if (e.message === 'EMAIL_EN_USO') {
             handleHttpError(res, 'EMAIL_EN_USO', 400);
         } else {
-            handleHttpError(res, 'ERROR_UPDATE_USER');
+            handleHttpError(res, 'ERROR_UPDATE_USER verifica los datos ingresados', 400);
         }
     }
 });

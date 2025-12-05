@@ -129,7 +129,7 @@ router.post('/', async (req, res) => {
             return handleHttpError(res, errores[e.message], 400);
         }
 
-        handleHttpError(res, 'ERROR_CREATE_DEVICE');
+        handleHttpError(res, 'ERROR_CREATE_DEVICE verifica los datos ingresados', 400);
     }
 });
 
@@ -182,7 +182,7 @@ router.patch('/:id', async (req, res) => {
             return handleHttpError(res, errores[e.message], 400);
         }
 
-        handleHttpError(res, 'ERROR_UPDATE_DEVICE');
+        handleHttpError(res, 'ERROR_UPDATE_DEVICE verifica los datos ingresados', 400);
     }
 });
 

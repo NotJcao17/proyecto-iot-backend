@@ -141,7 +141,7 @@ router.post('/', async (req, res) => {
         const newSensor = await sensorService.create(body);
         res.status(201).json(newSensor);
     } catch (e) {
-        handleHttpError(res, 'ERROR_CREATE_SENSOR');
+        handleHttpError(res, 'ERROR_CREATE_SENSOR verifica los datos ingresados', 400);
     }
 });
 /**
@@ -194,7 +194,7 @@ router.patch('/:id', async (req, res) => {
         }
         res.json(updatedSensor);
     } catch (e) {
-        handleHttpError(res, 'ERROR_UPDATE_SENSOR');
+        handleHttpError(res, 'ERROR_UPDATE_SENSOR verifica los datos ingresados', 400);
     }
 });
 /**

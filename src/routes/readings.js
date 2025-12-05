@@ -142,7 +142,7 @@ router.post('/', async (req, res) => {
         if (e.message === 'FECHA_INVALIDA') {
             return handleHttpError(res, 'FECHA_INVALIDA', 400);
         }
-        handleHttpError(res, 'ERROR_CREATE_READING');
+        handleHttpError(res, 'ERROR_CREATE_READING verifica los datos ingresados', 400);
     }
 });
 
@@ -202,7 +202,7 @@ router.patch('/:id', async (req, res) => {
         if (e.message === 'FECHA_INVALIDA') {
             return handleHttpError(res, 'FECHA_INVALIDA', 400);
         }
-        handleHttpError(res, 'ERROR_UPDATE_READING');
+        handleHttpError(res, 'ERROR_UPDATE_READING verifica los datos ingresados', 400);
     }
 });
 
