@@ -14,7 +14,7 @@ const options = {
         description: 'Servidor de Desarrollo Local',
       },
       {
-        url: 'https://proyecto-iot-backend-eb.onrender.com/api', // <--- PEGA TU URL DE RENDER AQUÍ
+        url: 'https://proyecto-iot-backend-eb.onrender.com/api',
         description: 'Servidor de Producción',
       },
     ],
