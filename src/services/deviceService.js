@@ -11,7 +11,7 @@ const deviceService = {
     },
 
     //get by id
-    getById: async () => {
+    getById: async (id) => {
         return await DeviceModel.findById(id);
     },
 

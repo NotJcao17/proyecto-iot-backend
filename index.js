@@ -20,6 +20,7 @@ app.use('/api/users', require('./src/routes/users'));
 app.use('/api/zones', require('./src/routes/zones'));
 app.use('/api/sensors', require('./src/routes/sensors'))
 app.use('/api/readings', require('./src/routes/readings'));
+app.use('/api/devices', require('./src/routes/devices'));
 
 // Ruta de prueba
 app.get('/', (req, res) => {
